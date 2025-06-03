@@ -1,5 +1,6 @@
 package dev.majanito.screens;
 
+import dev.majanito.SessionIDLoginMod;
 import dev.majanito.utils.APIUtils;
 import dev.majanito.utils.SessionUtils;
 import net.minecraft.client.gui.DrawContext;
@@ -89,6 +90,10 @@ public class LoginScreen extends Screen {
             this.client.setScreen(new net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen(new TitleScreen()));
         }).dimensions(centerX - 100, centerY + 50, 200, 20).build();
         this.addDrawableChild(backButton);
+
+        if(SessionIDLoginMod.currentSession.equals(SessionIDLoginMod.originalSession)){
+            restoreButton.active = false;
+        }
     }
 
     @Override

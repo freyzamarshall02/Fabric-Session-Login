@@ -1,6 +1,7 @@
 package dev.majanito.mixin;
 
 
+import dev.majanito.screens.EditAccountScreen;
 import dev.majanito.screens.LoginScreen;
 import dev.majanito.utils.APIUtils;
 import dev.majanito.utils.SessionUtils;
@@ -36,14 +37,19 @@ public abstract class MultiplayerScreenMixin extends Screen {
 		isSessionValid = null;
 		hasValidationStarted = false;
 
-		int buttonX = this.width - 90;
+		int loginButtonX = this.width - 90;
+		int editAccountButtonX = this.width - 180;
 		int buttonY = 5;
 		int buttonWidth = 80;
 		int buttonHeight = 20;
 
 		this.addDrawableChild(ButtonWidget.builder(Text.literal("Login"), button -> {
 			MinecraftClient.getInstance().setScreen(new LoginScreen());
-		}).dimensions(buttonX, buttonY, buttonWidth, buttonHeight).build());
+		}).dimensions(loginButtonX, buttonY, buttonWidth, buttonHeight).build());
+
+		this.addDrawableChild(ButtonWidget.builder(Text.literal("Edit Account"), button -> {
+			MinecraftClient.getInstance().setScreen(new EditAccountScreen());
+		}).dimensions(editAccountButtonX, buttonY, buttonWidth, buttonHeight).build());
 	}
 
 	@Inject(method = "render", at = @At("TAIL"))

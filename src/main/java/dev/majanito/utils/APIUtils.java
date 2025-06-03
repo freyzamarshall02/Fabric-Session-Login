@@ -5,6 +5,9 @@ import com.google.gson.JsonParser;
 import net.minecraft.client.MinecraftClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -14,6 +17,7 @@ import java.util.UUID;
 
 
 public class APIUtils {
+
     public static String[] getProfileInfo(String token) throws IOException {
         try {
             CloseableHttpClient client = HttpClients.createDefault();
@@ -48,6 +52,33 @@ public class APIUtils {
             return ign.equals(MinecraftClient.getInstance().getSession().getUsername()) && uuid.equals(MinecraftClient.getInstance().getSession().getUuidOrNull());
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public static int changeSkin(String url,String token){
+        try {
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPost request = new HttpPost("https://api.minecraftservices.com/minecraft/profile/skins");
+            request.setHeader("Authorization", "Bearer " + token);
+            request.setHeader("Content-Type", "application/json");
+            String jsonString = String.format("{ \"variant\": \"classic\", \"url\": \"%s\"}", url);
+            request.setEntity(new StringEntity(jsonString));
+            CloseableHttpResponse response = client.execute(request);
+            return response.getStatusLine().getStatusCode();
+        }catch (Exception e){
+            return -1;
+        }
+    }
+
+    public static int changeName(String newName,String token){
+        try {
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPut request = new HttpPut("https://api.minecraftservices.com/minecraft/profile/name/" + newName);
+            request.setHeader("Authorization", "Bearer " + token);
+            CloseableHttpResponse response = client.execute(request);
+            return response.getStatusLine().getStatusCode();
+        }catch (Exception e){
+            return -1;
         }
     }
 }

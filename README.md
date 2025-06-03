@@ -11,6 +11,10 @@ A lightweight Fabric client-side mod that adds a GUI to log in using Minecraft s
 - 🧩 Adds a login screen to input your Minecraft session ID (Bearer token)
 - ✅ Displays current login status (`Valid` or `Invalid`) with real-time validation
 - 💬 Shows username and session info in the Multiplayer screen
+- 🧑‍💼 Built-in screen to **edit your session account**:
+    - 🔤 Change Minecraft **username**
+    - 🖼️ Change Minecraft **skin** via URL
+- 🛡️ Protects your main account: edits only allowed for session logins
 - 🎯 Fully client-side — no server-side impact
 - 🖥️ Clean UI that blends into the default Minecraft style
 
@@ -28,10 +32,11 @@ A lightweight Fabric client-side mod that adds a GUI to log in using Minecraft s
 
 ## ⚙️ How It Works
 
-- You’ll find a new “Login” button on the **Multiplayer** screen
-- Paste your session token and click Login
-- The game switches to that session without restarting
-- A session validity indicator appears in the corner
+- You’ll find a new **Login** button on the **Multiplayer** screen
+- Paste your session token and click Login — no restart needed
+- An indicator shows whether the session is valid
+- A second button opens the **Edit Account** screen
+- There, you can safely update your session account’s name or skin
 
 ---
 
@@ -40,15 +45,6 @@ A lightweight Fabric client-side mod that adds a GUI to log in using Minecraft s
 - Built for **Minecraft 1.21.5**
 - Requires **Java 21**
 - Uses **Gradle** and **Fabric Loom**
-
----
-
-## 📝 TODO
-
-Planned features:
-
-- 🧑‍🎤 **Name changer** using only the session ID
-- 🎨 **Skin changer** (upload or switch skins via session)
 
 ---
 

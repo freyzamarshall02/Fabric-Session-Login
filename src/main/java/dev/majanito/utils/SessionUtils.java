@@ -37,6 +37,18 @@ public class SessionUtils {
         );
     }
 
+    public static Session createSession(String username, UUID uuid, String ssid) {
+
+        return new Session(
+                username,
+                uuid,
+                ssid,
+                Optional.empty(),
+                Optional.empty(),
+                Session.AccountType.MOJANG
+        );
+    }
+
     public static void setSession(Session session){
         SessionIDLoginMod.currentSession = session;
     }
