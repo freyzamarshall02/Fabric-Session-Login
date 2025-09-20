@@ -53,68 +53,47 @@ public class LoginScreen extends Screen {
                     String[] sessionInfo = APIUtils.getProfileInfo(sessionInput);
 
                     SessionUtils.setSession(SessionUtils.createSession(sessionInfo[0], sessionInfo[1], sessionInput));
-
-
                     this.currentTitle = surroundWithObfuscated(Text.literal("Logged in as: " + sessionInfo[0]).formatted(Formatting.GREEN), 5);
-
-
                     restoreButton.active = true;
                 } catch (IOException | RuntimeException e) {
                     this.currentTitle = surroundWithObfuscated(Text.literal("Invalid Session ID").formatted(Formatting.RED), 7);
                 }
-
-
             } else {
-
                 this.currentTitle = surroundWithObfuscated(Text.literal("Session ID cannot be empty").formatted(Formatting.RED), 5);
             }
         }).dimensions(centerX - 100, centerY + 25, 97, 20).build();
         this.addDrawableChild(loginButton);
 
-
         restoreButton = ButtonWidget.builder(Text.literal("Restore"), button -> {
             SessionUtils.restoreSession();
-
-
-            this.currentTitle = surroundWithObfuscated(Text.literal("Restored original session").formatted(Formatting.GREEN),7);
-
+            this.currentTitle = surroundWithObfuscated(Text.literal("Restored original session").formatted(Formatting.GREEN), 7);
             loginButton.active = true;
             restoreButton.active = false;
         }).dimensions(centerX + 3, centerY + 25, 97, 20).build();
         this.addDrawableChild(restoreButton);
 
-
         ButtonWidget backButton = ButtonWidget.builder(Text.literal("Back"), button -> {
-
             assert this.client != null;
             this.client.setScreen(new net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen(new TitleScreen()));
         }).dimensions(centerX - 100, centerY + 50, 200, 20).build();
         this.addDrawableChild(backButton);
 
-        if(SessionIDLoginMod.currentSession.equals(SessionIDLoginMod.originalSession)){
+        if (SessionIDLoginMod.currentSession.equals(SessionIDLoginMod.originalSession)) {
             restoreButton.active = false;
         }
     }
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-
         this.renderBackground(context, mouseX, mouseY, delta);
-
-
         super.render(context, mouseX, mouseY, delta);
-
-
         sessionField.render(context, mouseX, mouseY, delta);
 
-
-        context.drawCenteredTextWithShadow(
-                this.textRenderer,
-                this.currentTitle,
-                this.width / 2,
-                this.height / 2 - 30,
-                0xFFFFFF
-        );
+        // --- FIXED: manual centering + drawTextWithShadow ---
+        int textWidth = this.textRenderer.getWidth(this.currentTitle);
+        int x = (this.width - textWidth) / 2;
+        int y = this.height / 2 - 30;
+        context.drawTextWithShadow(this.textRenderer, this.currentTitle, x, y, 0xFFFFFF);
     }
 
     @Override
